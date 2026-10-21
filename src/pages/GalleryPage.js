@@ -1,4 +1,5 @@
 import { API_BASE } from '../apiConfig.js';
+import { t } from '../i18n.js';
 export class GalleryPage {
   constructor(containerId) {
     this.container = document.getElementById(containerId);
@@ -9,13 +10,45 @@ export class GalleryPage {
     this.API_URL = `${API_BASE}/gallery`;
     this.page = 1;
     this.hasMore = true;
+    this._keyboardBound = false;
+    this._onKeydown = (e) => {
+      const lightbox = document.getElementById('gal-lb');
+      if (!lightbox?.classList.contains('open')) return;
+      if (e.key === 'Escape') this.closeLightbox();
+      if (e.key === 'ArrowLeft') {
+        this.lightboxIndex = (this.lightboxIndex - 1 + this.filtered.length) % this.filtered.length;
+        this.updateLightbox();
+      }
+      if (e.key === 'ArrowRight') {
+        this.lightboxIndex = (this.lightboxIndex + 1) % this.filtered.length;
+        this.updateLightbox();
+      }
+    };
+    window.addEventListener('langChange', () => this.refreshLocale());
   }
 
   async render() {
+    document.title = `${t('navGallery')} | Centenary Baptist Church, Secunderabad`;
     this.renderShell();
+    this.bindEvents();
     await this.fetchImages();
     this.renderGrid();
+  }
+
+  refreshLocale() {
+    if (window.location.hash !== '#/gallery') return;
+
+    document.title = `${t('navGallery')} | Centenary Baptist Church, Secunderabad`;
+    const lightbox = document.getElementById('gal-lb');
+    const wasOpen = lightbox?.classList.contains('open');
+    this.renderShell({ scroll: false });
+    this.renderGrid();
     this.bindEvents();
+
+    if (wasOpen && this.filtered.length) {
+      this.lightboxIndex = Math.min(this.lightboxIndex, this.filtered.length - 1);
+      this.openLightbox(this.lightboxIndex);
+    }
   }
 
   async fetchImages(append = false) {
@@ -56,8 +89,8 @@ export class GalleryPage {
     }
   }
 
-  renderShell() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  renderShell({ scroll = true } = {}) {
+    if (scroll) window.scrollTo({ top: 0, behavior: 'smooth' });
     this.container.innerHTML = `
       <style>
         .gal-hero {
@@ -283,9 +316,9 @@ export class GalleryPage {
       <!-- Hero -->
       <div class="gal-hero">
         <div class="gal-hero-content">
-          <div class="gal-hero-label">📸 Photo Gallery</div>
-          <h1>Moments of <span class="gal-hero-gold">Grace</span> &amp; Community</h1>
-          <p>A glimpse into our worship, fellowship, and ministry life at Centenary Baptist Church.</p>
+          <div class="gal-hero-label">📸 ${t('galleryTitle')}</div>
+          <h1>${t('galleryHeroTitle')}</h1>
+          <p>${t('gallerySubtitle')}</p>
         </div>
       </div>
 
@@ -293,7 +326,7 @@ export class GalleryPage {
       <div class="gal-body">
         <div class="gal-inner">
           <div class="gal-filters" id="gal-filters">
-            <button class="gal-filter-btn active" data-cat="all">All Photos</button>
+            <button class="gal-filter-btn active" data-cat="all">${t('galleryAllPhotos')}</button>
           </div>
           <div class="gal-stats" id="gal-stats"></div>
           <div class="gal-grid" id="gal-grid">
@@ -327,7 +360,18 @@ export class GalleryPage {
 
   catClass(cat) {
     const map = { worship: 'gal-cat-worship', youth: 'gal-cat-youth', events: 'gal-cat-events', general: 'gal-cat-general' };
-    return map[cat] || 'gal-cat-general';
+    return map[String(cat || 'general').toLowerCase()] || 'gal-cat-general';
+  }
+
+  categoryLabel(category) {
+    const categoryKeys = {
+      worship: 'galleryCategoryWorship',
+      youth: 'galleryCategoryYouth',
+      events: 'galleryCategoryEvents',
+      general: 'galleryGeneral'
+    };
+    const normalized = String(category || 'general').toLowerCase();
+    return categoryKeys[normalized] ? t(categoryKeys[normalized]) : category;
   }
 
   renderFilters() {
@@ -336,7 +380,7 @@ export class GalleryPage {
     const cats = this.getCategories();
     el.innerHTML = cats.map(cat => `
       <button class="gal-filter-btn ${this.activeCategory === cat ? 'active' : ''}" data-cat="${cat}">
-        ${cat === 'all' ? 'All Photos' : cat}
+        ${cat === 'all' ? t('galleryAllPhotos') : this.categoryLabel(cat)}
       </button>
     `).join('');
     el.querySelectorAll('.gal-filter-btn').forEach(btn => {
@@ -352,7 +396,9 @@ export class GalleryPage {
     this.renderFilters();
 
     if (stats) {
-      stats.innerHTML = `Showing <strong>${this.filtered.length}</strong> of <strong>${this.images.length}</strong> photos`;
+      stats.innerHTML = t('galleryStats')
+        .replace('{shown}', `<strong>${this.filtered.length}</strong>`)
+        .replace('{total}', `<strong>${this.images.length}</strong>`);
     }
 
     if (this.filtered.length === 0) {
@@ -362,8 +408,8 @@ export class GalleryPage {
             <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
             <polyline points="21 15 16 10 5 21"/>
           </svg>
-          <h3>${this.images.length === 0 ? 'No photos yet' : 'No photos in this category'}</h3>
-          <p>${this.images.length === 0 ? 'Check back soon — photos will be added here.' : 'Try selecting a different category.'}</p>
+          <h3>${this.images.length === 0 ? t('galleryNoPhotos') : t('galleryNoCategoryPhotos')}</h3>
+          <p>${this.images.length === 0 ? t('galleryCheckBack') : t('galleryTryDifferent')}</p>
         </div>
       `;
       document.getElementById('gal-load-more')?.remove();
@@ -371,7 +417,7 @@ export class GalleryPage {
     }
 
     grid.innerHTML = this.filtered.map((img, i) => `
-      <div class="gal-item" data-index="${i}" tabindex="0" role="button" aria-label="View ${img.title || 'photo'}">
+      <div class="gal-item" data-index="${i}" tabindex="0" role="button" aria-label="${t('galleryViewPhoto')}: ${img.title || t('galleryUntitled')}">
         <div style="overflow:hidden;position:relative;">
           <img class="gal-item-img" src="${img.image_url}" alt="${img.title || ''}" loading="lazy">
           <div class="gal-item-overlay">
@@ -384,8 +430,8 @@ export class GalleryPage {
           </div>
         </div>
         <div class="gal-item-info">
-          <div class="gal-item-title">${img.title || 'Untitled'}</div>
-          <span class="gal-item-cat ${this.catClass(img.category)}">${img.category || 'general'}</span>
+          <div class="gal-item-title">${img.title || t('galleryUntitled')}</div>
+          <span class="gal-item-cat ${this.catClass(img.category)}">${this.categoryLabel(img.category)}</span>
         </div>
       </div>
     `).join('');
@@ -405,16 +451,16 @@ export class GalleryPage {
         loadMoreBtn.className = 'btn btn-outline-maroon';
         loadMoreBtn.style.display = 'block';
         loadMoreBtn.style.margin = '40px auto 0';
-        loadMoreBtn.textContent = 'Load More';
+        loadMoreBtn.textContent = t('galleryLoadMore');
         loadMoreBtn.addEventListener('click', async () => {
           this.page++;
-          loadMoreBtn.textContent = 'Loading...';
+          loadMoreBtn.textContent = t('galleryLoading');
           await this.fetchImages(true);
           this.renderGrid();
         });
         grid.parentNode.appendChild(loadMoreBtn);
       } else {
-        loadMoreBtn.textContent = 'Load More';
+        loadMoreBtn.textContent = t('galleryLoadMore');
       }
     } else if (loadMoreBtn) {
       loadMoreBtn.remove();
@@ -438,8 +484,8 @@ export class GalleryPage {
     if (!img) return;
     const lbImg = document.getElementById('gal-lb-img');
     if (lbImg) { lbImg.src = img.image_url; lbImg.alt = img.title || ''; }
-    const t = document.getElementById('gal-lb-title'); if (t) t.textContent = img.title || 'Untitled';
-    const c = document.getElementById('gal-lb-cat'); if (c) c.textContent = img.category || '';
+    const title = document.getElementById('gal-lb-title'); if (title) title.textContent = img.title || t('galleryUntitled');
+    const category = document.getElementById('gal-lb-cat'); if (category) category.textContent = this.categoryLabel(img.category);
     const n = document.getElementById('gal-lb-counter'); if (n) n.textContent = `${this.lightboxIndex + 1} / ${this.filtered.length}`;
   }
 
@@ -457,12 +503,9 @@ export class GalleryPage {
     });
     lb?.addEventListener('click', (e) => { if (e.target === lb) this.closeLightbox(); });
 
-    // Keyboard nav
-    document.addEventListener('keydown', (e) => {
-      if (!lb?.classList.contains('open')) return;
-      if (e.key === 'Escape') this.closeLightbox();
-      if (e.key === 'ArrowLeft') { this.lightboxIndex = (this.lightboxIndex - 1 + this.filtered.length) % this.filtered.length; this.updateLightbox(); }
-      if (e.key === 'ArrowRight') { this.lightboxIndex = (this.lightboxIndex + 1) % this.filtered.length; this.updateLightbox(); }
-    });
+    if (!this._keyboardBound) {
+      document.addEventListener('keydown', this._onKeydown);
+      this._keyboardBound = true;
+    }
   }
 }

@@ -1,5 +1,6 @@
 import { API_BASE } from '../apiConfig.js';
 import { getSiteSettings } from '../siteSettings.js';
+import { t } from '../i18n.js';
 import './ContactForm.css';
 
 export class ContactForm {
@@ -10,11 +11,35 @@ export class ContactForm {
     this.render();
     this.bindEvents();
     this.applySiteSettings();
+    window.addEventListener('langChange', () => this.refreshLocale());
+  }
+
+  refreshLocale() {
+    if (this.isDisabled || !this.container?.isConnected) return;
+
+    const values = this.inputs ? Object.fromEntries(
+      Object.entries(this.inputs)
+        .filter(([key]) => key !== 'honeypot')
+        .map(([key, input]) => [key, input.value])
+    ) : {};
+    const activeView = this.successView?.style.display === 'block'
+      ? 'success'
+      : this.errorView?.style.display === 'block'
+        ? 'error'
+        : 'form';
+
+    this.render();
+    Object.entries(values).forEach(([key, value]) => {
+      if (this.inputs[key]) this.inputs[key].value = value;
+    });
+    this.bindEvents();
+    this.showView(activeView, this.lastErrorMessage);
   }
 
   async applySiteSettings() {
     const settings = await getSiteSettings();
     if (settings.contactForm?.enabled === false) {
+      this.isDisabled = true;
       this.container.innerHTML = '';
     }
   }
@@ -29,38 +54,38 @@ export class ContactForm {
 
             <div class="cf-row">
               <div class="cf-group">
-                <label for="cf-fname">First Name <span>*</span></label>
-                <input type="text" id="cf-fname" class="cf-input" name="firstName" placeholder="e.g. John" required />
-                <span class="cf-error-text">Please enter your first name.</span>
+                <label for="cf-fname">${t('formFName')} <span>*</span></label>
+                <input type="text" id="cf-fname" class="cf-input" name="firstName" placeholder="${t('formFNamePlaceholder')}" required />
+                <span class="cf-error-text">${t('formFNameError')}</span>
               </div>
               <div class="cf-group">
-                <label for="cf-lname">Last Name <span>*</span></label>
-                <input type="text" id="cf-lname" class="cf-input" name="lastName" placeholder="e.g. Doe" required />
-                <span class="cf-error-text">Please enter your last name.</span>
+                <label for="cf-lname">${t('formLName')} <span>*</span></label>
+                <input type="text" id="cf-lname" class="cf-input" name="lastName" placeholder="${t('formLNamePlaceholder')}" required />
+                <span class="cf-error-text">${t('formLNameError')}</span>
               </div>
             </div>
 
             <div class="cf-row">
               <div class="cf-group">
-                <label for="cf-phone">Phone Number <span>*</span></label>
-                <input type="tel" id="cf-phone" class="cf-input" name="phone" placeholder="e.g. 9876543210" required />
-                <span class="cf-error-text">Please enter your phone number.</span>
+                <label for="cf-phone">${t('formPhone')} <span>*</span></label>
+                <input type="tel" id="cf-phone" class="cf-input" name="phone" placeholder="${t('formPhonePlaceholder')}" required />
+                <span class="cf-error-text">${t('formPhoneError')}</span>
               </div>
               <div class="cf-group">
-                <label for="cf-email">Email Address <span>*</span></label>
-                <input type="email" id="cf-email" class="cf-input" name="email" placeholder="e.g. john@example.com" required />
-                <span class="cf-error-text">Please enter a valid email address.</span>
+                <label for="cf-email">${t('formEmail')} <span>*</span></label>
+                <input type="email" id="cf-email" class="cf-input" name="email" placeholder="${t('formEmailPlaceholder')}" required />
+                <span class="cf-error-text">${t('formEmailError')}</span>
               </div>
             </div>
 
             <div class="cf-group" style="margin-bottom: 24px;">
-              <label for="cf-message">Message <span>*</span></label>
-              <textarea id="cf-message" class="cf-textarea" name="message" placeholder="How can we help you?" required></textarea>
-              <span class="cf-error-text">Please enter your message (min 10 characters).</span>
+              <label for="cf-message">${t('formMsg')} <span>*</span></label>
+              <textarea id="cf-message" class="cf-textarea" name="message" placeholder="${t('formMsgPlaceholder')}" required></textarea>
+              <span class="cf-error-text">${t('formMsgError')}</span>
             </div>
 
             <button type="submit" class="cf-submit" id="cf-submit-btn">
-              <span>SEND MESSAGE</span>
+              <span>${t('formSubmit')}</span>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <line x1="5" y1="12" x2="19" y2="12"></line>
                 <polyline points="12 5 19 12 12 19"></polyline>
@@ -76,9 +101,9 @@ export class ContactForm {
               <polyline points="22 4 12 14.01 9 11.01"></polyline>
             </svg>
           </div>
-          <h3 class="cf-state-title">Message Sent Successfully</h3>
-          <p class="cf-state-desc">Thank you for reaching out to Centenary Baptist Church. We have received your message and our team will get back to you soon.</p>
-          <button class="cf-btn-reset" id="cf-btn-success-reset">SEND ANOTHER MESSAGE</button>
+          <h3 class="cf-state-title">${t('formSuccessTitle')}</h3>
+          <p class="cf-state-desc">${t('formSuccessDesc')}</p>
+          <button class="cf-btn-reset" id="cf-btn-success-reset">${t('formSendAnother')}</button>
         </div>
 
         <div class="cf-error-state" style="display: none;">
@@ -89,9 +114,9 @@ export class ContactForm {
               <line x1="12" y1="16" x2="12.01" y2="16"></line>
             </svg>
           </div>
-          <h3 class="cf-state-title">Something Went Wrong</h3>
-          <p class="cf-state-desc" id="cf-error-message">We couldn't send your message right now. Please try again in a moment or contact us directly.</p>
-          <button class="cf-btn-reset" id="cf-btn-error-reset">TRY AGAIN</button>
+          <h3 class="cf-state-title">${t('formErrorTitle')}</h3>
+          <p class="cf-state-desc" id="cf-error-message">${t('formErrorDesc')}</p>
+          <button class="cf-btn-reset" id="cf-btn-error-reset">${t('formTryAgain')}</button>
         </div>
       </div>
     `;
@@ -175,7 +200,7 @@ export class ContactForm {
 
     // Loading State
     this.submitBtn.disabled = true;
-    this.btnText.textContent = 'SENDING...';
+    this.btnText.textContent = t('formSending');
 
     const payload = {
       firstName: this.inputs.fname.value.trim(),
@@ -207,7 +232,7 @@ export class ContactForm {
       this.showView('error');
     } finally {
       this.submitBtn.disabled = false;
-      this.btnText.textContent = 'SEND MESSAGE';
+      this.btnText.textContent = t('formSubmit');
     }
   }
 
@@ -217,13 +242,16 @@ export class ContactForm {
     this.errorView.style.display = 'none';
 
     if (viewName === 'form') {
+      this.lastErrorMessage = null;
       this.formView.style.display = 'block';
     } else if (viewName === 'success') {
+      this.lastErrorMessage = null;
       this.successView.style.display = 'block';
     } else if (viewName === 'error') {
       this.errorView.style.display = 'block';
-      if (errorMsg) {
-        this.container.querySelector('#cf-error-message').textContent = errorMsg;
+      this.lastErrorMessage = errorMsg || this.lastErrorMessage || null;
+      if (this.lastErrorMessage) {
+        this.container.querySelector('#cf-error-message').textContent = this.lastErrorMessage;
       }
     }
   }

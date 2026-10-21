@@ -1,5 +1,6 @@
 import { API_BASE } from '../apiConfig.js';
 import { churchData } from '../data/churchData.js';
+import { t } from '../i18n.js';
 
 const API_URL = `${API_BASE}/ministries`;
 
@@ -44,7 +45,7 @@ export class MinistriesSection {
     let html = `
       <div class="wrap">
         <div class="section-header text-center fade-in-up" style="margin-bottom: 48px;">
-          <h2 style="font-family: 'Playfair Display', serif; color: var(--primary-green); font-size: 36px; margin: 0;">MINISTRIES</h2>
+          <h2 style="font-family: 'Playfair Display', serif; color: var(--primary-green); font-size: 36px; margin: 0;">${t('navMinistries')}</h2>
         </div>
         <div class="ministries-grid-elegant fade-in-up stagger-1">
     `;

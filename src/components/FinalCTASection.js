@@ -13,11 +13,11 @@ export class FinalCTASection {
 
     let html = `
       <div class="wrap text-center final-cta-content fade-in-up">
-        <h2 style="font-family: 'Playfair Display', serif; color: var(--primary-green); font-size: 28px; margin: 0 0 8px 0; text-transform: uppercase;">COME WORSHIP WITH US.</h2>
-        <p style="color: var(--muted-text); font-size: 16px; margin: 0 0 24px 0;">Join us at St. Mary's Road, Secunderabad.</p>
+        <h2 style="font-family: 'Playfair Display', serif; color: var(--primary-green); font-size: 28px; margin: 0 0 8px 0; text-transform: uppercase;">${t('footerCtaText')}</h2>
+        <p style="color: var(--muted-text); font-size: 16px; margin: 0 0 24px 0;">${t('footerCtaSub')}</p>
         <div class="fcta-actions">
-          <a href="#/visit" class="btn btn-solid-maroon" style="margin-right: 16px;">PLAN YOUR VISIT &rarr;</a>
-          <a href="#/worship/watch-live" class="btn btn-outline-maroon">WATCH LIVE &rarr;</a>
+          <a href="#/visit" class="btn btn-solid-maroon" style="margin-right: 16px;">${t('planVisit')}</a>
+          <a href="#/worship/watch-live" class="btn btn-outline-maroon">${t('watchLive')}</a>
         </div>
       </div>
     `;

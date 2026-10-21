@@ -13,6 +13,7 @@ import { ContactForm } from './components/ContactForm.js';
 import { CampusSection } from './components/CampusSection.js';
 import { LeadershipSection } from './components/LeadershipSection.js';
 import { WelcomeSection } from './components/WelcomeSection.js';
+import { PosterCarousel } from './components/PosterCarousel.js';
 import { HistoryPreviewSection } from './components/HistoryPreviewSection.js';
 import { churchData } from './data/churchData.js';
 import { Router } from './router.js';
@@ -79,7 +80,7 @@ function getNavData() {
         }
       ]
     },
-    { label: 'Pastor Team', href: '#/pastor-team' },
+    { label: t('navPastorTeam'), href: '#/pastor-team' },
     {
       label: t('navMinistries'), href: '#/ministries', dropdown: true,
       columns: [
@@ -100,7 +101,7 @@ function getNavData() {
       ]
     },
     { label: t('navEvents'), href: '#/events' },
-    { label: 'Gallery', href: '#/gallery' },
+    { label: t('navGallery'), href: '#/gallery' },
     {
       label: t('navVisit'), href: '#/visit', dropdown: true,
       columns: [
@@ -271,6 +272,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   if (document.getElementById('home-welcome-section')) {
     new WelcomeSection('home-welcome-section');
+  }
+  if (document.getElementById('home-event-posters')) {
+    new PosterCarousel('#home-event-posters');
   }
   if (document.getElementById('home-history-preview')) {
     new HistoryPreviewSection('home-history-preview');

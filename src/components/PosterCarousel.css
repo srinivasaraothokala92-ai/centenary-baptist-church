@@ -1,0 +1,575 @@
+/* =====================================================================
+   POSTER CAROUSEL — Centenary Baptist Church
+   Church Events & Announcements with cinematic sanctuary background.
+   Clean ivory card surfaces, natural poster aspect ratios, no dark sidebars.
+   ===================================================================== */
+
+/* Section wrapper — Golden Sanctuary Background */
+.poster-section-wrapper {
+  position: relative;
+  overflow-x: clip;
+  padding: 34px 20px 38px;
+  border-top: 3px solid #B6893F;
+  border-bottom: 3px solid #B6893F;
+  background-color: #0b1511;
+  background-image: 
+    linear-gradient(
+      180deg,
+      rgba(8, 16, 12, 0.42) 0%,
+      rgba(8, 16, 12, 0.20) 25%,
+      rgba(8, 16, 12, 0.22) 75%,
+      rgba(8, 16, 12, 0.46) 100%
+    ),
+    url('/images/golden-sanctuary-background.png');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+.poster-section-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1320px;
+  margin: 0 auto;
+}
+
+/* Header */
+.poster-header {
+  position: static !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 16px;
+  padding: 0;
+}
+.poster-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2.6px;
+  color: #F3CA68;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.85);
+  margin-bottom: 4px;
+}
+.poster-eyebrow span {
+  display: inline-block;
+  width: 28px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, #F3CA68);
+  opacity: 0.85;
+}
+.poster-eyebrow span:last-child {
+  background: linear-gradient(to left, transparent, #F3CA68);
+}
+.poster-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(1.4rem, 2.2vw, 1.85rem);
+  font-weight: 700;
+  color: #FFFFFF;
+  margin: 0 0 5px;
+  line-height: 1.25;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.85), 0 1px 3px rgba(0, 0, 0, 0.9);
+}
+.poster-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.92);
+  margin: 0 auto;
+  line-height: 1.4;
+  max-width: 580px;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.8);
+}
+.poster-ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+.poster-ornament span {
+  display: inline-block;
+  width: 36px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, #F3CA68);
+}
+.poster-ornament span:last-child {
+  background: linear-gradient(to left, transparent, #F3CA68);
+}
+.poster-ornament svg {
+  width: 15px;
+  height: 15px;
+  fill: #F3CA68;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.7));
+}
+
+/* Carousel stage — 58px padding places arrows cleanly OUTSIDE the cards */
+.poster-carousel-stage {
+  position: relative;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 58px;
+}
+
+/* Scroll viewport */
+.poster-viewport {
+  position: relative;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 16px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.poster-viewport::-webkit-scrollbar { display: none; }
+
+/* Sliding track — displays multiple cards side by side */
+.poster-track {
+  position: relative;
+  display: flex;
+  gap: 20px;
+  will-change: scroll-position;
+  padding: 4px 2px 10px;
+}
+
+/* Individual slide — 3 cards visible at once on desktop */
+.poster-slide {
+  flex: 0 0 calc((100% - 40px) / 3);
+  min-width: calc((100% - 40px) / 3);
+  max-width: calc((100% - 40px) / 3);
+  box-sizing: border-box;
+  scroll-snap-align: start;
+  display: flex;
+  background: none;
+  padding: 0;
+}
+
+/* Responsive: 2 on tablet, 1 on mobile */
+@media (max-width: 1024px) {
+  .poster-slide {
+    flex: 0 0 calc((100% - 20px) / 2);
+    min-width: calc((100% - 20px) / 2);
+    max-width: calc((100% - 20px) / 2);
+  }
+  .poster-carousel-stage {
+    padding: 0 50px;
+  }
+}
+
+@media (max-width: 640px) {
+  .poster-slide {
+    flex: 0 0 88%;
+    min-width: 88%;
+    max-width: 88%;
+    scroll-snap-align: center;
+  }
+  .poster-carousel-stage {
+    padding: 0 8px;
+  }
+}
+
+/* Poster card — warm ivory surface, refined gold border, balanced proportions */
+.poster-card {
+  background: #FAF7F0;
+  border: 1.5px solid rgba(182, 137, 63, 0.4);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.30), 0 2px 6px rgba(0, 0, 0, 0.14);
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+              box-shadow 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+              border-color 0.35s ease;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+  padding: 0;
+}
+.poster-card:hover,
+.poster-card:focus-visible {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.40), 0 0 0 2px #B6893F;
+  border-color: #B6893F;
+  outline: none;
+}
+
+/* Poster image container — clean ivory surface, natural portrait ratio, ZERO dark sidebars */
+.poster-image-frame {
+  width: 100%;
+  background: #FAF7F0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(182, 137, 63, 0.20);
+  padding: 0;
+}
+.poster-image-frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3.8 / 5;
+  object-fit: contain;
+  background: #FAF7F0;
+  user-select: none;
+  pointer-events: none;
+  transition: transform 0.35s ease;
+}
+.poster-card:hover .poster-image-frame img {
+  transform: scale(1.02);
+}
+
+/* Card content interior — ivory surface with aligned hierarchy */
+.poster-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 13px 15px 15px;
+  background: #FAF7F0;
+  flex: 1;
+}
+
+/* Date and time badges */
+.poster-card-date {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: #9C722B;
+  letter-spacing: 0.3px;
+}
+.poster-card-date svg {
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+  stroke: #9C722B;
+}
+.poster-date-main {
+  display: inline-flex;
+  align-items: center;
+}
+.poster-card-time {
+  margin-left: 3px;
+  color: #7A571B;
+  font-weight: 600;
+}
+.poster-review-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(180, 83, 9, 0.1);
+  color: #B45309;
+  border: 1px solid rgba(180, 83, 9, 0.3);
+  font-size: 0.64rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+  padding: 2px 6px;
+  border-radius: 10px;
+  margin-left: auto;
+}
+.poster-review-tag svg {
+  stroke: #B45309;
+}
+.poster-card-date--unverified .poster-date-main {
+  color: #8C6A30;
+}
+
+/* Deep green titles */
+.poster-card-title {
+  display: block;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #003F3A;
+  line-height: 1.25;
+  margin: 0;
+}
+
+/* Ministry badge */
+.poster-card-category {
+  display: inline-block;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.66rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.1px;
+  color: #003F3A;
+  background: rgba(0, 63, 58, 0.08);
+  border: 1px solid rgba(0, 63, 58, 0.2);
+  border-radius: 20px;
+  padding: 2px 8px;
+  width: fit-content;
+}
+
+/* Short description */
+.poster-card-description {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.78rem;
+  color: #4B5563;
+  line-height: 1.35;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Full-width action button pinned to bottom */
+.poster-view-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.3px;
+  color: #FAF7F0;
+  background: #003F3A;
+  border: 1px solid #003F3A;
+  border-radius: 8px;
+  padding: 8px 14px;
+  margin-top: auto;
+  box-sizing: border-box;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 6px rgba(0, 63, 58, 0.18);
+}
+.poster-view-action svg {
+  width: 13px;
+  height: 13px;
+  stroke: #FAF7F0;
+  transition: transform 0.25s ease;
+}
+.poster-card:hover .poster-view-action {
+  background: #B6893F;
+  border-color: #B6893F;
+  color: #003F3A;
+  box-shadow: 0 4px 12px rgba(182, 137, 63, 0.35);
+}
+.poster-card:hover .poster-view-action svg {
+  stroke: #003F3A;
+  transform: translateX(4px);
+}
+
+/* Navigation arrow buttons — placed OUTSIDE the cards on desktop */
+.poster-nav-btn {
+  position: absolute;
+  top: calc(50% - 12px);
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(0, 63, 58, 0.94);
+  color: #FAF7F0;
+  border: 2px solid #B6893F;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.poster-nav-btn svg {
+  width: 19px;
+  height: 19px;
+  stroke: #FAF7F0;
+}
+.poster-nav-btn:hover {
+  background: #B6893F;
+  color: #003F3A;
+  border-color: #FAF7F0;
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 6px 20px rgba(182, 137, 63, 0.6);
+}
+.poster-nav-btn:hover svg {
+  stroke: #003F3A;
+}
+.poster-nav-btn--prev { left: 6px; }
+.poster-nav-btn--next { right: 6px; }
+
+/* Pagination dots */
+.poster-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+}
+.poster-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: 2px solid rgba(243, 202, 104, 0.75);
+  background: rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.poster-dot.is-active {
+  background: #F3CA68;
+  border-color: #F3CA68;
+  width: 28px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(243, 202, 104, 0.6);
+}
+.poster-dot:hover:not(.is-active) {
+  background: rgba(243, 202, 104, 0.4);
+  border-color: #F3CA68;
+  transform: scale(1.2);
+}
+
+/* State panels (loading / error / empty) */
+.poster-state {
+  padding: 50px 24px;
+  text-align: center;
+  color: rgba(248, 249, 247, 0.85);
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  background: rgba(14, 10, 8, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(182, 137, 63, 0.35);
+  border-radius: 16px;
+}
+.poster-state--loading .poster-loading-mark {
+  display: block;
+  width: 32px;
+  height: 32px;
+  border: 3px solid rgba(182, 137, 63, 0.25);
+  border-top-color: #F3CA68;
+  border-radius: 50%;
+  animation: poster-spin 0.85s linear infinite;
+  margin: 0 auto 12px;
+}
+@keyframes poster-spin { to { transform: rotate(360deg); } }
+.poster-state--error { color: #f9756a; }
+.poster-retry-btn {
+  margin-top: 14px;
+  padding: 8px 22px;
+  border: 2px solid #B6893F;
+  background: transparent;
+  color: #B6893F;
+  border-radius: 6px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.poster-retry-btn:hover { background: #B6893F; color: #1B2733; }
+
+/* Lightbox modal */
+.poster-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  background: rgba(8, 8, 8, 0.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  cursor: zoom-out;
+}
+.poster-lightbox.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+body.poster-lightbox-open { overflow: hidden; }
+.poster-lightbox-dialog {
+  position: relative;
+  max-width: 88vw;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: default;
+  animation: poster-lb-in 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+@keyframes poster-lb-in {
+  from { transform: scale(0.88); opacity: 0; }
+  to   { transform: scale(1);    opacity: 1; }
+}
+.poster-lightbox-image {
+  max-width: 100%;
+  max-height: 80vh;
+  border-radius: 10px;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.8);
+  border: 2px solid rgba(182, 137, 63, 0.5);
+  object-fit: contain;
+  display: block;
+}
+.poster-lightbox-caption {
+  margin-top: 12px;
+  text-align: center;
+  color: rgba(248, 249, 247, 0.9);
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.1rem;
+  font-style: italic;
+}
+.poster-lightbox-close {
+  position: absolute;
+  top: -46px;
+  right: -8px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+  line-height: 1;
+}
+.poster-lightbox-close:hover {
+  background: #B6893F;
+  border-color: #B6893F;
+  color: #111;
+  transform: scale(1.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .poster-section-wrapper {
+    padding: 28px 12px 32px;
+    background-position: 68% center;
+  }
+  .poster-carousel-stage { padding: 0 44px; }
+  .poster-nav-btn { width: 38px; height: 38px; }
+  .poster-nav-btn svg { width: 17px; height: 17px; }
+  .poster-nav-btn--prev { left: 4px; }
+  .poster-nav-btn--next { right: 4px; }
+  .poster-card-title { font-size: 1.02rem; }
+}
+
+@media (max-width: 640px) {
+  .poster-carousel-stage { padding: 0 6px; }
+  .poster-nav-btn { display: none; }
+  .poster-card-content { padding: 12px 14px 14px; }
+}

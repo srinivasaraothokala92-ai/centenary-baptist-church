@@ -24,7 +24,8 @@ const lazyModules = {
   adminMedia: () => import('./admin/AdminMedia.js'),
   adminAuditLogs: () => import('./admin/AdminAuditLogs.js'),
   adminLeadership: () => import('./admin/AdminLeadership.js'),
-  adminVisitors: () => import('./admin/AdminVisitors.js')
+  adminVisitors: () => import('./admin/AdminVisitors.js'),
+  adminPosters: () => import('./admin/AdminPosters.js')
 };
 
 export class Router {
@@ -245,6 +246,8 @@ export class Router {
       (await this.getLazyComponent('adminLeadership', 'AdminLeadership')).render();
     } else if (hash === '#/admin/visitors') {
       (await this.getLazyComponent('adminVisitors', 'AdminVisitors')).render();
+    } else if (hash === '#/admin/event-posters' || hash === '#/admin/posters') {
+      (await this.getLazyComponent('adminPosters', 'AdminPosters')).render();
     } else {
       (await this.getLazyComponent('adminDashboard', 'AdminDashboard')).render();
     }

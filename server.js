@@ -222,6 +222,9 @@ app.use('/api/audit-logs', auditLogRoutes);
 import leadershipRoutes from './leadershipRoutes.js';
 app.use('/api/leadership', leadershipRoutes);
 
+import posterRoutes from './posterRoutes.js';
+app.use('/api/event-posters', posterRoutes);
+
 // Serve static files in production
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, 'dist')));

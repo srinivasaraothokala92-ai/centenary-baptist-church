@@ -29,7 +29,7 @@ export class UpcomingEvents {
       <div class="events-editorial-wrapper fade-in-up visible">
         <div class="wrap">
           <div class="events-editorial-header text-center" style="margin-bottom: 48px;">
-            <h2 style="font-family: 'Playfair Display', serif; color: #4C151A; font-size: 36px; margin: 0; text-transform: uppercase;">UPCOMING EVENTS</h2>
+            <h2 style="font-family: 'Playfair Display', serif; color: #4C151A; font-size: 36px; margin: 0; text-transform: uppercase;">${t('eventsTitle')}</h2>
           </div>
           <div class="events-editorial-list">
             ${[1,2,3].map(() => `
@@ -61,15 +61,15 @@ export class UpcomingEvents {
       <div class="events-editorial-wrapper fade-in-up visible">
         <div class="wrap">
           <div class="events-editorial-header text-center" style="margin-bottom: 32px;">
-            <h2 style="font-family: 'Playfair Display', serif; color: #4C151A; font-size: 36px; margin: 0; text-transform: uppercase;">UPCOMING EVENTS</h2>
+            <h2 style="font-family: 'Playfair Display', serif; color: #4C151A; font-size: 36px; margin: 0; text-transform: uppercase;">${t('eventsTitle')}</h2>
           </div>
           <div style="text-align:center;padding:40px 0;color:#6b7280;" role="status" aria-live="polite">
             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin-bottom:14px;opacity:0.45;" aria-hidden="true">
               <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
             </svg>
-            <p style="margin:0 0 6px;font-size:15px;font-weight:500;color:#374151;">Unable to load upcoming events.</p>
-            <p style="margin:0 0 24px;font-size:13px;color:#9ca3af;">Please try again.</p>
-            <button id="events-retry-btn" aria-label="Retry loading upcoming events" style="
+            <p style="margin:0 0 6px;font-size:15px;font-weight:500;color:#374151;">${t('eventsUnavailable')}</p>
+            <p style="margin:0 0 24px;font-size:13px;color:#9ca3af;">${t('tryAgain')}</p>
+            <button id="events-retry-btn" aria-label="${t('retry')}" style="
               display: inline-flex;
               align-items: center;
               gap: 8px;
@@ -87,11 +87,11 @@ export class UpcomingEvents {
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
                 <path d="M21.5 2v6h-6M2.13 15.57a10 10 0 1 0 3.43-11.44L2.13 8"/>
               </svg>
-              Retry
+              ${t('retry')}
             </button>
           </div>
           <div style="text-align:center;margin-top:16px;">
-            <a href="#/events" class="btn btn-outline-maroon" style="font-size:13px;">VIEW ALL EVENTS &rarr;</a>
+            <a href="#/events" class="btn btn-outline-maroon" style="font-size:13px;">${t('eventsViewAll')}</a>
           </div>
         </div>
       </div>
@@ -133,11 +133,11 @@ export class UpcomingEvents {
         <div class="events-editorial-wrapper">
           <div class="wrap">
             <div class="events-editorial-header text-center" style="margin-bottom:32px;">
-              <h2 style="font-family:'Playfair Display',serif;color:#4C151A;font-size:36px;margin:0;text-transform:uppercase;">UPCOMING EVENTS</h2>
+              <h2 style="font-family:'Playfair Display',serif;color:#4C151A;font-size:36px;margin:0;text-transform:uppercase;">${t('eventsTitle')}</h2>
             </div>
             <div style="text-align:center;padding:40px 0;color:#6b7280;">
-              <p style="margin:0 0 16px;font-size:15px;">No upcoming events at this time.</p>
-              <a href="#/events" class="btn btn-outline-maroon">VIEW ALL EVENTS &rarr;</a>
+              <p style="margin:0 0 16px;font-size:15px;">${t('noUpcomingEvents')}</p>
+              <a href="#/events" class="btn btn-outline-maroon">${t('eventsViewAll')}</a>
             </div>
           </div>
         </div>
@@ -149,7 +149,7 @@ export class UpcomingEvents {
       <div class="events-editorial-wrapper fade-in-up">
         <div class="wrap">
           <div class="events-editorial-header text-center" style="margin-bottom: 48px;">
-            <h2 style="font-family: 'Playfair Display', serif; color: #4C151A; font-size: 36px; margin: 0; text-transform: uppercase;">UPCOMING EVENTS</h2>
+            <h2 style="font-family: 'Playfair Display', serif; color: #4C151A; font-size: 36px; margin: 0; text-transform: uppercase;">${t('eventsTitle')}</h2>
           </div>
           
           <div class="events-editorial-list">
@@ -170,7 +170,7 @@ export class UpcomingEvents {
             <p class="ee-desc">${event.description}</p>
           </div>
           <div class="event-editorial-action">
-            <a href="#/events/${event.id}" class="btn-ee-details">DETAILS &rarr;</a>
+            <a href="#/events/${event.id}" class="btn-ee-details">${t('eventsDetails')} &rarr;</a>
           </div>
         </div>
       `;
@@ -179,7 +179,7 @@ export class UpcomingEvents {
     html += `
           </div>
           <div class="events-editorial-footer text-center" style="margin-top: 48px;">
-            <a href="#/events" class="btn btn-outline-maroon">VIEW ALL EVENTS &rarr;</a>
+            <a href="#/events" class="btn btn-outline-maroon">${t('eventsViewAll')}</a>
           </div>
         </div>
       </div>

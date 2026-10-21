@@ -1,5 +1,4 @@
 import { t } from '../i18n.js';
-import { churchData } from '../data/churchData.js';
 import { FirstTimeVisitorModal } from './VisitorModal.js';
 
 export class WelcomeSection {
@@ -18,9 +17,7 @@ export class WelcomeSection {
 
   render() {
     if (!this.container) return;
-    
-    const services = churchData.welcomeServices || [];
-    
+
     // Icons
     const worshipIcon = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="4" x2="12" y2="20"></line><line x1="8" y1="9" x2="16" y2="9"></line></svg>`;
     const communityIcon = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>`;
@@ -55,34 +52,11 @@ export class WelcomeSection {
           <button class="btn btn-solid-green welcome-new-here" id="btn-welcome-new-here">${t('newHereBtn')}</button>
         </div>
 
-        <!-- Bottom Service Area -->
-        <div class="welcome-services-wrapper fade-in-up" style="animation-delay: 0.2s">
-          <div class="welcome-services-header">
-            <h3>${t('sundayTitle')}</h3>
-          </div>
-          
-          <div class="welcome-services-grid">
-            ${services.map((s, index) => `
-              <div class="welcome-service-block">
-                <div class="ws-time">${s.time}</div>
-                <div class="ws-language">${t(s.languageKey)}</div>
-                <div class="ws-type">${t(s.titleKey)}</div>
-                <div class="ws-location">${t(s.locationKey)}</div>
-              </div>
-              ${index < services.length - 1 ? '<div class="ws-divider"></div>' : ''}
-            `).join('')}
-          </div>
-          
-          <div class="welcome-services-footer">
-            <a href="#/worship" class="ws-view-all">${t('viewAllBtn')}</a>
-            <div class="ws-heritage">${t('heritageSince')}</div>
-          </div>
-        </div>
       </div>
     `;
 
     this.container.innerHTML = html;
-    
+
     // Setup intersection observer for animations
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {

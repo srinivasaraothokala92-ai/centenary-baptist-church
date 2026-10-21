@@ -108,7 +108,7 @@
       <!-- Top Scripture & Language Bar -->
     <div class="nav-top-wrapper">
       <div class="nav-top wrap">
-        <div class="scripture">“We Preach Christ Crucified” 1 Cor. 1:23</div>
+        <div class="scripture" data-i18n="verse">“We Preach Christ Crucified” 1 Cor. 1:23</div>
         <div class="lang-switch">
           <button class="lang-btn active" data-lang="en">EN</button> <span class="sep">|</span>
           <button class="lang-btn" data-lang="te">తెలుగు</button> <span class="sep">|</span>
@@ -132,7 +132,7 @@
           <div class="links" id="nav-links">
             <!-- Navigation will be dynamically rendered here -->
           </div>
-          <button class="menu-toggle" id="mobile-menu-btn" aria-label="Toggle menu">
+          <button class="menu-toggle" id="mobile-menu-btn" data-i18n-aria-label="menuToggle" aria-label="Toggle menu">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
           </button>
         </div>
@@ -154,13 +154,13 @@
           <h1 class="hero-title" data-i18n="heroTitle">Welcome Home,<br><span class="gold-accent">in Christ</span></h1>
           <p class="lede" data-i18n="heroSub">A Christ-centred family of faith since 1875</p>
           <div class="hero-actions">
-            <button class="btn btn-solid-green" data-i18n="planVisit" id="btn-plan-visit">
+            <button class="btn btn-solid-green" id="btn-plan-visit">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-              PLAN YOUR VISIT
+              <span data-i18n="planVisit">PLAN YOUR VISIT</span>
             </button>
-            <button class="btn btn-hero-watch" id="btn-watch-live" data-i18n="watchLive">
+            <button class="btn btn-hero-watch" id="btn-watch-live">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg>
-              WATCH LIVE
+              <span data-i18n="watchLive">WATCH LIVE</span>
             </button>
           </div>
           
@@ -241,6 +241,9 @@
 
     <!-- Welcome / Sunday Services Section -->
     <section id="home-welcome-section"></section>
+
+    <!-- Church Events & Announcements -->
+    <section id="home-event-posters"></section>
 
     <!-- Faith & History Preview -->
     <section id="home-history-preview"></section>
@@ -346,8 +349,8 @@
       <div class="wrap footer-grid">
         <!-- Brand Column -->
         <div class="footer-brand">
-          <div class="brand-name">Centenary Baptist Church</div>
-          <p class="brand-desc">Worshipping at St. Mary's Road, Secunderabad since 1875. A legacy of faithfulness.</p>
+          <div class="brand-name" data-i18n="footerChurchName">Centenary Baptist Church</div>
+          <p class="brand-desc" data-i18n="footerBrandDesc">Worshipping at St. Mary's Road, Secunderabad since 1875. A legacy of faithfulness.</p>
           <div class="social-links">
             <!-- Facebook -->
             <a href="https://www.facebook.com/centenarybaptistchurch" class="social-btn" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
@@ -372,40 +375,40 @@
 
         <!-- Quick Links Column -->
         <div class="footer-links">
-          <h4>Quick Links</h4>
+          <h4 data-i18n="footerColQuickLinks">Quick Links</h4>
           <nav>
-            <a href="#/">Home</a>
-            <a href="#/about">About Us</a>
-            <a href="#/about/leadership">Leadership</a>
-            <a href="#/about/150-years">150 Years</a>
-            <a href="#/worship/sermons">Sermons</a>
-            <a href="#/events">Events</a>
-            <a href="#/give">Give</a>
+            <a href="#/" data-i18n="navHome">Home</a>
+            <a href="#/about" data-i18n="navAbout">About Us</a>
+            <a href="#/about/leadership" data-i18n="navLeadership">Leadership</a>
+            <a href="#/about/150-years" data-i18n="nav150Years">150 Years</a>
+            <a href="#/worship/sermons" data-i18n="navSermons">Sermons</a>
+            <a href="#/events" data-i18n="navEvents">Events</a>
+            <a href="#/give" data-i18n="navGive">Give</a>
           </nav>
         </div>
 
         <!-- Ministries Column -->
         <div class="footer-links">
-          <h4>Ministries</h4>
+          <h4 data-i18n="footerMinistries">Ministries</h4>
           <nav>
-            <a href="#/ministries/children">Children</a>
-            <a href="#/ministries/youth">Youth Fellowship</a>
-            <a href="#/ministries/women">Women's Ministry</a>
-            <a href="#/ministries/missions">Missions</a>
-            <a href="#/ministries/medical">Medical Ministry</a>
-            <a href="#/ministries/church-school">CBC School</a>
+            <a href="#/ministries/children" data-i18n="navChildren">Children</a>
+            <a href="#/ministries/youth" data-i18n="navYouth">Youth Fellowship</a>
+            <a href="#/ministries/women" data-i18n="navWomen">Women's Ministry</a>
+            <a href="#/ministries/missions" data-i18n="navMissions">Missions</a>
+            <a href="#/ministries/medical" data-i18n="navMedicalMinistry">Medical Ministry</a>
+            <a href="#/ministries/church-school" data-i18n="navChurchSchool">CBC School</a>
           </nav>
         </div>
 
         <!-- Contact Column -->
         <div class="footer-contact">
-          <h4>Contact Us</h4>
-          <p>61/A, St. Mary's Road,<br>Regimental Bazaar,<br>Secunderabad, Telangana 500003</p>
+          <h4 data-i18n="footerContactUs">Contact Us</h4>
+          <p data-i18n="footerShortAddress">61/A, St. Mary's Road,<br>Regimental Bazaar,<br>Secunderabad, Telangana 500003</p>
           <p><a href="mailto:office@centenarybaptist.org">office@centenarybaptist.org</a></p>
-          <p>Phone: +91 (40) 1234 5678</p>
+          <p><span data-i18n="footerPhone">Phone</span>: +91 (40) 1234 5678</p>
           <p style="margin-top:16px;">
             <a href="#/visit" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);padding:8px 16px;border-radius:6px;color:#fff;text-decoration:none;font-size:0.85rem;font-weight:600;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.22)'" onmouseout="this.style.background='rgba(255,255,255,0.12)'">
-              Plan a Visit &rarr;
+              <span data-i18n="navPlanVisit">Plan a Visit</span> &rarr;
             </a>
           </p>
         </div>
@@ -413,13 +416,13 @@
 
       <!-- Footer Bottom Bar -->
       <div class="wrap footer-maroon-bottom">
-        <div class="fine">© 2026 Centenary Baptist Church. All rights reserved.</div>
+        <div class="fine" data-i18n="footerCopyright">© 2026 Centenary Baptist Church. All rights reserved.</div>
         <div class="footer-bottom-links">
-          <a href="#/privacy">Privacy Policy</a>
+          <a href="#/privacy" data-i18n="footerPrivacy">Privacy Policy</a>
           <span class="sep">·</span>
-          <a href="#/terms">Terms</a>
+          <a href="#/terms" data-i18n="footerTerms">Terms</a>
           <span class="sep">·</span>
-          <a href="#/admin/login">Admin Login</a>
+          <a href="#/admin/login" data-i18n="footerAdminLogin">Admin Login</a>
         </div>
       </div>
     </footer>

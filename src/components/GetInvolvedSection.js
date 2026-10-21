@@ -15,38 +15,38 @@ export class GetInvolvedSection {
     let html = `
       <div class="wrap">
         <div class="section-header text-center fade-in-up" style="margin-bottom: 48px;">
-          <h2 style="font-family: 'Playfair Display', serif; color: var(--primary-green); font-size: 36px; margin: 0; text-transform: uppercase;">GET INVOLVED</h2>
+          <h2 style="font-family: 'Playfair Display', serif; color: var(--primary-green); font-size: 36px; margin: 0; text-transform: uppercase;">${t('getInvolvedTitle')}</h2>
         </div>
         
         <div class="get-involved-blocks fade-in-up stagger-1">
           <a href="#/ministries/prayer" class="gi-block">
             <div class="gi-content">
-              <h3>PRAY</h3>
-              <p>Prayer Cells</p>
+              <h3>${t('getInvolvedPray')}</h3>
+              <p>${t('getInvolvedPrayerCells')}</p>
             </div>
             <div class="gi-arrow">&rarr;</div>
           </a>
           
           <a href="#/ministries" class="gi-block">
             <div class="gi-content">
-              <h3>SERVE</h3>
-              <p>Get involved in ministry</p>
+              <h3>${t('getInvolvedServe')}</h3>
+              <p>${t('getInvolvedServeText')}</p>
             </div>
             <div class="gi-arrow">&rarr;</div>
           </a>
           
           <a href="#/give" class="gi-block">
             <div class="gi-content">
-              <h3>GIVE</h3>
-              <p>Support the work of the church</p>
+              <h3>${t('getInvolvedGive')}</h3>
+              <p>${t('getInvolvedGiveText')}</p>
             </div>
             <div class="gi-arrow">&rarr;</div>
           </a>
           
           <a href="#/worship" class="gi-block">
             <div class="gi-content">
-              <h3>ATTEND</h3>
-              <p>Join us for worship</p>
+              <h3>${t('getInvolvedAttend')}</h3>
+              <p>${t('getInvolvedAttendText')}</p>
             </div>
             <div class="gi-arrow">&rarr;</div>
           </a>

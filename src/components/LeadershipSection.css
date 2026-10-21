@@ -74,13 +74,78 @@
 }
 
 /* ------------------------------------------------------------------
-   Grid — Flexbox to naturally center 5th card on desktop
+   Carousel layout
    ------------------------------------------------------------------ */
-.pt-grid {
+.pt-carousel-section {
+  position: relative;
+}
+
+.pt-carousel-controls {
   display: flex;
-  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.pt-carousel-control {
+  display: inline-flex;
+  align-items: center;
   justify-content: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border: 1px solid rgba(182, 137, 63, 0.55);
+  border-radius: 50%;
+  color: #4C151A;
+  background: rgba(255, 255, 255, 0.88);
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.pt-carousel-control:hover {
+  color: #FFFFFF;
+  background: #4C151A;
+  border-color: #4C151A;
+  transform: translateY(-1px);
+}
+
+.pt-carousel-control:focus-visible {
+  outline: 3px solid rgba(182, 137, 63, 0.55);
+  outline-offset: 3px;
+}
+
+.pt-carousel-viewport {
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(76, 21, 26, 0.45) transparent;
+  border-radius: 14px;
+}
+
+.pt-carousel-viewport::-webkit-scrollbar {
+  height: 8px;
+}
+
+.pt-carousel-viewport::-webkit-scrollbar-thumb {
+  background: rgba(76, 21, 26, 0.42);
+  border-radius: 999px;
+}
+
+.pt-carousel-track {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: clamp(270px, 23vw, 320px);
+  grid-auto-rows: 1fr;
+  align-items: stretch;
   gap: 24px;
+  padding: 4px 2px 14px;
 }
 
 /* ------------------------------------------------------------------
@@ -96,8 +161,9 @@
   text-align: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
-  flex: 0 1 calc(25% - 18px); /* 4 cards per row max */
-  min-width: 250px;
+  min-width: 0;
+  height: 100%;
+  scroll-snap-align: start;
 }
 
 .pt-card:hover {
@@ -262,8 +328,8 @@
    Responsive
    ------------------------------------------------------------------ */
 @media (max-width: 1024px) {
-  .pt-card {
-    flex: 0 1 calc(50% - 16px);
+  .pt-carousel-track {
+    grid-auto-columns: minmax(270px, 42vw);
   }
 }
 
@@ -280,13 +346,29 @@
     font-size: 0.95rem;
   }
 
-  .pt-card {
-    flex: 0 1 100%;
-    max-width: 380px;
-    margin: 0 auto;
+  .pt-carousel-track {
+    grid-auto-columns: calc(100vw - 48px);
+    gap: 16px;
+  }
+
+  .pt-carousel-controls {
+    margin-bottom: 10px;
   }
 
   .pt-card-photo-wrap {
     height: 280px; /* Slightly taller on mobile for better proportion */
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .pt-carousel-viewport {
+    scroll-behavior: auto;
+  }
+
+  .pt-carousel-control,
+  .pt-card,
+  .pt-card-photo {
+    transition-duration: 0.01ms;
+  }
+}
+
